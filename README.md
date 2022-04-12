@@ -4,7 +4,8 @@
 ### useState
 - Router.js에 useState 추가
     - ```import { useState } from "react";```
-    ```const AppRouter = ({ isLoggedIn }) => {
+    ```
+    const AppRouter = ({ isLoggedIn }) => {
         //const [isLoggedIn, setIsLoggedIn] = useState(true)
         return (
             <Router>
@@ -21,7 +22,8 @@
                 </Switch>
             </Router>
         )
-    }```
+    }
+    ```
 - :exclamation: react-router-dom 버전이 6버전이라면 Switch가 작동하지않아 Routes로 변경해주어야 한다 
     - 고로 다운그레이드를 시키도록 한다 
     ```$ npm react-router-dom@5.2.0```
