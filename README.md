@@ -41,6 +41,17 @@
     ]
 }
 ```
+### Firebase
+- 파이어베이스를 연결하다 오류가 발생할수 있어 firebase.js 파일명을 fbase.js로 변경 한다
+- 이후 auth경로를 import 해주고 코드를 수정해준다 
+```
+import firebase from 'firebase/compat/app';
+import "firebase/auth";
+...
+firebase.initializeApp(firebaseConfig);
+export const authService = firebase.auth();
+
+```
 ## [3월 30일]
 
 ### Firebase
