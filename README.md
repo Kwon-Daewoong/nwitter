@@ -1,4 +1,44 @@
 # 권대웅
+## [4월 06일]
+
+### useState
+- Router.js에 useState 추가
+    - ```import { useState } from "react";```
+    ```const AppRouter = ({ isLoggedIn }) => {
+        //const [isLoggedIn, setIsLoggedIn] = useState(true)
+        return (
+            <Router>
+                <Switch>
+                    {isLoggedIn ? (
+                        <Route exact path="/">
+                            <Home />
+                        </Route>
+                    ) : (
+                        <Route exact path="/">
+                            <Auth />
+                        </Route>
+                    )}
+                </Switch>
+            </Router>
+        )
+    }```
+- :exclamation: react-router-dom 버전이 6버전이라면 Switch가 작동하지않아 Routes로 변경해주어야 한다 
+    - 고로 다운그레이드를 시키도록 한다 
+    ```$ npm react-router-dom@5.2.0```
+### 절대경로
+- ex) ```import App from './components/App';```
+- 위 코드처럼 현재는 상대 경로를 사용하고 있으므로 jsconfig.json 파일을 이용
+- src를 절대 경로로 사용하기 위함 
+```
+{
+    "compilerOptions": {
+        "baseUrl": "src"
+    },
+    "include": [
+        "src"
+    ]
+}
+```
 ## [3월 30일]
 
 ### Firebase
