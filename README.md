@@ -1,4 +1,70 @@
 # 권대웅
+## [4월 13일]
+### Firebase 오류
+- fbase.js 파일에 auth를 import 하고 나면 오류가 없지만 화면출력이 안되는 오류가 있다
+    - ```$ npm i firebase@8.8.0```
+    - firebase를 다운그레이드를 하면 오류가 해결된다
+    - 다운그레이드를 했으므로 버전에 따른 import firebase문을 수정해준다 
+    - ```import firebase from 'firebase/app';```
+### Auth.js
+- 코드 추가 및 수정
+
+```
+import { useState } from "react";
+const Auth = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [newAccount, setNewAccount] = useState(true);
+    const onChange = (event) => {
+        const {
+            target: { name, value },
+        } = event;
+        if (name === "email") {
+            setEmail(value);
+        } else if (name === "password") {
+            setPassword(value);
+        }
+    };
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        if (newAccount) {
+
+        } else {
+
+        }
+    };
+    return (
+        <div>
+            <form onSubmit={onSubmit}>
+                <input
+                    name="email"
+                    type="email"
+                    placeholder="Email"
+                    required
+                    value={email}
+                    onChange={onChange}
+                />
+                <input
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    required
+                    value={password}
+                    onChange={onChange}
+                />
+                <input type="submit" placeholder="Log In" required />
+            </form>
+            <div>
+                <button>Continue with google</button>
+                <button>Continue with github</button>
+            </div>
+        </div>
+    );
+}
+
+export default Auth
+```
+
 ## [4월 06일]
 
 ### useState
