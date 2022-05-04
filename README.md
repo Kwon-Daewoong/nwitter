@@ -1,4 +1,9 @@
 # 권대웅
+## [4월 27일]
+###
+- Firebase에 회원가입
+    - 이메일과 비밀번호를 입력하여 submit 버튼을 누르면 파이어베이스에 있는 Authentication - Users에 정보가 뜨도록 해야함
+    - 
 ## [4월 13일]
 ### Firebase 오류
 - fbase.js 파일에 auth를 import 하고 나면 오류가 없지만 화면출력이 안되는 오류가 있다
