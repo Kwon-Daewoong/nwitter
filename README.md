@@ -1,9 +1,95 @@
 # 권대웅
+## [5월 04일]
+### 소셜 로그인
+- 구글 로그인, 깃허브 로그인을 위해 코드를 수정한다
+- Auth.js 중 onSocialClick 부분
+```
+        const {
+            target: { name },
+        } = event;
+        let provider;
+        if (name === "google") {
+            provider = new firebaseInstance.auth.GoogleAuthProvider();
+        } else if (name === "github") {
+            provider = new firebaseInstance.auth.GithubAuthProvider();
+        }
+        const data = await authService.signInWithPopup(provider);
+        console.log(data);
+```
+### Roter & Navigation
+- Navigation.js 작성 
+```
+import { Link } from "react-router-dom";
+
+const Navigation = () => {
+    return (
+        <nav>
+            <ul>
+                <li>
+                    <Link to="/">Home</Link>
+                </li>
+                <li>
+                    <Link to="/profile">My Profile</Link>
+                </li>
+            </ul>
+        </nav>
+    );
+};
+
+export default Navigation;
+```
+- Router.js 로그인이 되었을때만 Navigation이 보이도록 수정
+```
+return (
+
+        <Router>
+            {isLoggedIn && <Navigation />}
+            <Switch>
+                {isLoggedIn ? (
+                    <>
+                        <Route exact path="/">
+                            <Home />
+                        </Route>
+                        <Route exact path="/profile">
+                            <Profile />
+                        </Route>
+                    </>
+                ) : (
+                    <Route exact path="/">
+                        <Auth />
+                    </Route>
+                )}
+
+            </Switch>
+        </Router>
+```
 ## [4월 27일]
 ###
 - Firebase에 회원가입
     - 이메일과 비밀번호를 입력하여 submit 버튼을 누르면 파이어베이스에 있는 Authentication - Users에 정보가 뜨도록 해야함
-    - 
+- Auth.js 수정
+```
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            let data;
+            if (newAccount) {
+                // create newAccount
+                data = await authService.createUserWithEmailAndPassword(
+                    email,
+                    password
+                );
+            } else {
+                // log in
+                data = await authService.signInWithEmailAndPassword(email, password);
+            }
+            console.log(data);
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+```
+
 ## [4월 13일]
 ### Firebase 오류
 - fbase.js 파일에 auth를 import 하고 나면 오류가 없지만 화면출력이 안되는 오류가 있다
