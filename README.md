@@ -1,5 +1,69 @@
 # 권대웅
-## [5월 04일]
+## [05월 11일]
+### 소셜 로그인
+- 구글 로그인, 깃허브 로그인을 위해 코드를 수정한다
+- Auth.js 중 onSocialClick 부분
+```
+        const {
+            target: { name },
+        } = event;
+        let provider;
+        if (name === "google") {
+            provider = new firebaseInstance.auth.GoogleAuthProvider();
+        } else if (name === "github") {
+            provider = new firebaseInstance.auth.GithubAuthProvider();
+        }
+        const data = await authService.signInWithPopup(provider);
+        console.log(data);
+```
+### Roter & Navigation
+- Navigation.js 작성 
+```
+import { Link } from "react-router-dom";
+
+const Navigation = () => {
+    return (
+        <nav>
+            <ul>
+                <li>
+                    <Link to="/">Home</Link>
+                </li>
+                <li>
+                    <Link to="/profile">My Profile</Link>
+                </li>
+            </ul>
+        </nav>
+    );
+};
+
+export default Navigation;
+```
+- Router.js 로그인이 되었을때만 Navigation이 보이도록 수정
+```
+return (
+
+        <Router>
+            {isLoggedIn && <Navigation />}
+            <Switch>
+                {isLoggedIn ? (
+                    <>
+                        <Route exact path="/">
+                            <Home />
+                        </Route>
+                        <Route exact path="/profile">
+                            <Profile />
+                        </Route>
+                    </>
+                ) : (
+                    <Route exact path="/">
+                        <Auth />
+                    </Route>
+                )}
+
+            </Switch>
+        </Router>
+```
+## [05월 04일]
 ### 소셜 로그인
 - 구글 로그인, 깃허브 로그인을 위해 코드를 수정한다
 - Auth.js 중 onSocialClick 부분
