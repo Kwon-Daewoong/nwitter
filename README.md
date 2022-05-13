@@ -1,67 +1,45 @@
 # 권대웅
 ## [05월 11일]
-### 소셜 로그인
-- 구글 로그인, 깃허브 로그인을 위해 코드를 수정한다
-- Auth.js 중 onSocialClick 부분
+### 파이어베이스 데이터 추가
+- Cloud firestare 화면에서 컬렉션 시작 
+    - 컬렉션 id 작성
+    - 문서 id는 자동 지정
+    - 필드, 유형, 값 지정
+- 파이어베이스 사용
+    - fbase.js
+        - ```import "firebase/firestore"```
+        - ```export const dbService = firebase.firestore();```
+- Home.js 수정
 ```
-        const {
-            target: { name },
-        } = event;
-        let provider;
-        if (name === "google") {
-            provider = new firebaseInstance.auth.GoogleAuthProvider();
-        } else if (name === "github") {
-            provider = new firebaseInstance.auth.GithubAuthProvider();
-        }
-        const data = await authService.signInWithPopup(provider);
-        console.log(data);
-```
-### Roter & Navigation
-- Navigation.js 작성 
-```
-import { Link } from "react-router-dom";
+...
+  const [nweet, setNweet] = useState("");
+  const [nweets, setNweets] = useState([]);
 
-const Navigation = () => {
-    return (
-        <nav>
-            <ul>
-                <li>
-                    <Link to="/">Home</Link>
-                </li>
-                <li>
-                    <Link to="/profile">My Profile</Link>
-                </li>
-            </ul>
-        </nav>
-    );
-};
+  const getNweets = async() => {
+    const dbNweets = await dbService.collection("nweets").get();
 
-export default Navigation;
-```
-- Router.js 로그인이 되었을때만 Navigation이 보이도록 수정
-```
-return (
+    dbNweets.forEach((document) => {
+      const nweetObject = {...document.data(), id: document.id}
+      setNweets((prev) => [nweetObject, ...prev])
+    });
+  };
 
-        <Router>
-            {isLoggedIn && <Navigation />}
-            <Switch>
-                {isLoggedIn ? (
-                    <>
-                        <Route exact path="/">
-                            <Home />
-                        </Route>
-                        <Route exact path="/profile">
-                            <Profile />
-                        </Route>
-                    </>
-                ) : (
-                    <Route exact path="/">
-                        <Auth />
-                    </Route>
-                )}
+  useEffect(() => {
+    getNweets();
+  }, []);
 
-            </Switch>
-        </Router>
+  console.log(nweets);
+
+  const onSubmit = async(event) => {
+    event.preventDefault();
+    await dbService.collection("nweets").add({
+      text: nweet,
+      createdAt: Date.now()
+    });
+    setNweet("");
+  };
+
+...
 ```
 ## [05월 04일]
 ### 소셜 로그인
