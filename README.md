@@ -1,4 +1,46 @@
 # 권대웅
+## [05월 18일]
+### 파이어베이스 데이터 추가
+- Cloud firestare 화면에서 컬렉션 시작 
+    - 컬렉션 id 작성
+    - 문서 id는 자동 지정
+    - 필드, 유형, 값 지정
+- 파이어베이스 사용
+    - fbase.js
+        - ```import "firebase/firestore"```
+        - ```export const dbService = firebase.firestore();```
+- Home.js 수정
+```
+...
+  const [nweet, setNweet] = useState("");
+  const [nweets, setNweets] = useState([]);
+
+  const getNweets = async() => {
+    const dbNweets = await dbService.collection("nweets").get();
+
+    dbNweets.forEach((document) => {
+      const nweetObject = {...document.data(), id: document.id}
+      setNweets((prev) => [nweetObject, ...prev])
+    });
+  };
+
+  useEffect(() => {
+    getNweets();
+  }, []);
+
+  console.log(nweets);
+
+  const onSubmit = async(event) => {
+    event.preventDefault();
+    await dbService.collection("nweets").add({
+      text: nweet,
+      createdAt: Date.now()
+    });
+    setNweet("");
+  };
+
+...
+```
 ## [05월 11일]
 ### 파이어베이스 데이터 추가
 - Cloud firestare 화면에서 컬렉션 시작 
