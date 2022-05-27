@@ -1,4 +1,32 @@
 # 권대웅
+## [05월 25일]
+### 수정기능
+- onChange 
+    - Nweet.js
+    ```
+    const onChange = (event) => {
+        const {
+        target: {value},
+        } = event;
+        setNewNweet(value);
+    };
+    ```
+- 파이어베이스 값 입력
+### 사진 미리보기
+- Home.js
+```
+  const onFileChange = (event) => {
+    const { target: {files}, } =event;
+    const theFile = files[0];
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      const { currentTarget: {result}, } = finishedEvent;
+      setAttachment(result);
+    }
+    reader.readAsDataURL(theFile);
+  };
+```
+
 ## [05월 18일]
 ### 파이어베이스 데이터 추가
 - Cloud firestare 화면에서 컬렉션 시작 
